@@ -2,7 +2,8 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 import { WagmiConfig } from 'wagmi'
-import { sepolia } from 'wagmi/chains'
+import { polygonMumbai } from 'wagmi/chains'
+
 
 
 const projectId = '8eb3ea359713a5c3e40567c8f1178ea9'
@@ -13,14 +14,13 @@ const metadata = {
   theme: 'dark'
 }
 
-const chains = [sepolia]
+const chains = [polygonMumbai]
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
 
 createWeb3Modal({
   wagmiConfig, projectId, chains, themeVariables: {
-    '--w3m-accent': "#56AE57",
-    "--w3m-border-radius-master": "0px",
-
+    '--w3m-accent': "#f39b48",
+    "--w3m-border-radius-master": "2px"
   }
 })
 
