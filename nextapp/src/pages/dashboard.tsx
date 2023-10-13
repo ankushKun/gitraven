@@ -16,7 +16,7 @@ export default function Dashboard() {
 
     useEffect(() => setTabName("Profile"), [])
 
-    useEffect(() => { if (!account.isConnected) router.push("/") }, [account, router])
+    // useEffect(() => { if (!account.isConnected) router.push("/") }, [account, router])
 
     const TabButton = ({ text }: any) => {
         return <button className="btn btn-ghost" onClick={() => setTabName(text)}>{text}</button>

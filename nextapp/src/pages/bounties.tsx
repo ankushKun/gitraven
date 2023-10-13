@@ -11,7 +11,6 @@ export default function Bounties() {
     const screenSize = useScreenSize()
 
     useEffect(() => {
-        // fetch bounties from server
         fetch("/api/bounties").then(res => res.json()).then(data => setBounties(data.bounties))
     }, [])
 
