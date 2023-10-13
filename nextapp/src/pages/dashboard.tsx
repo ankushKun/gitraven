@@ -27,13 +27,13 @@ export default function Dashboard() {
         <div className="flex flex-col sm:flex-row w-full border-t border-white/30">
             <div className="border-r border-white/30 flex flex-row sm:flex-col gap-5 p-5 overflow-scroll">
                 <TabButton text="Profile" />
-                <TabButton text="Bounties" />
+                <TabButton text="My Bounties" />
                 <TabButton text="Bookmarks" />
                 <TabButton text="Settings" />
             </div>
             <div className="p-5 overflow-scroll">
                 {tabName === "Profile" && <Profile />}
-                {tabName === "Bounties" && <Bounties />}
+                {tabName === "My Bounties" && <Bounties />}
                 {tabName === "Bookmarks" && <Bookmarks />}
                 {tabName === "Settings" && <Settings />}
             </div>

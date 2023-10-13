@@ -19,7 +19,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (getStartedClicked && account.isConnected) router.push("/dashboard")
+    // if (getStartedClicked && account.isConnected) router.push("/dashboard")
 
   }, [getStartedClicked, account, router])
 
@@ -27,9 +27,7 @@ export default function Home() {
     <Page>
       <div className="h-[90vh] relative bottom-40 z-0 w-full flex flex-col justify-evenly items-center" id="hero">
         <div className="text-center text-4xl sm:text-6xl mt-10 " style={fonts.gabarito.style}>Earn 💴 from your contributions! 🧑‍💻</div>
-        <button className="btn btn-lg rounded-2xl bg-[#f39b48] text-black font-bold text-2xl hover:text-[#f39b48]"
-          onClick={getStarted} suppressHydrationWarning
-        >{account.isConnected ? "Visit Dashboard" : "Get Started"}</button>
+        <Link className="btn btn-lg rounded-2xl bg-[#f39b48] text-black font-bold text-2xl hover:text-[#f39b48]" href="/bounties">Checkout Bounties</Link>
         <Link href="#never-gonna-give-you-up" className='absolute bottom-10'>how it works? 🤨</Link>
       </div>
       <div className='bg-white/10 h-screen w-full' id="never-gonna-give-you-up">

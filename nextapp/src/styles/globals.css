@@ -2,8 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
     padding: 0px;
     margin: 0px;
     scroll-behavior: smooth !important;
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+*::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
 }
