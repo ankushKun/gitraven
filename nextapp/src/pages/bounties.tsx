@@ -1,6 +1,7 @@
 
 import Page from "@/components/page";
 import { useState, useEffect } from "react";
+import { MdClose } from "react-icons/md"
 import { BountyData } from "./api/bounties";
 import { dateToRelativeTime } from "@/utils/conversions";
 import useScreenSize from "@/hooks/screenSize";
@@ -34,18 +35,16 @@ export default function Bounties() {
     }
 
     return <Page background>
-        <div>
-        </div>
-        <div className="w-full flex">
+        <div className="w-full flex" >
             <div className={`${screenSize.width > 640 ? "w-[25%]" : "w-[100%]"} h-[70vh] overflow-scroll flex flex-col gap-5 items-center p-0.5 px-2`}>
                 {bounties.length} bounties found
                 {bounties.map((item, index) => <Item key={index} data={item} />)}
             </div>
             {screenSize.width > 640 ?
-                <div className="w-[75%] flex flex-col gap-5 ml-7 rounded-2xl bg-black/50 p-3 px-4 h-[70vh]">
-                    {/* DESKTOP VIEW */}
-                    {selectedBounty &&
-                        <>
+                <>
+                    {selectedBounty ?
+                        <div className="w-[75%] flex flex-col gap-5 ml-7 rounded-2xl bg-black/50 p-3 px-4 h-[70vh]" >
+                            {/* DESKTOP VIEW */}
                             <div className="flex justify-between">
                                 <div className="text-2xl font-bold">{selectedBounty.title}</div>
                                 <div className="text-white/50">{dateToRelativeTime(selectedBounty.created)}</div>
@@ -56,14 +55,14 @@ export default function Bounties() {
                             </div>
                             <div className="flex gap-2 justify-end">{selectedBounty.tags.map((tag, index) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</div>
                             <div className="text-white/50">{selectedBounty.status}</div>
-                        </>
-                    }
-                </div> :
-                <>
+                        </div>
+                        : null}
+                </> :
+                <div >
                     {/* MOBILE VIEW, SLIDES FROM BOTTOM */}
-                    {selectedBounty &&
-                        <div className="bg-black/70 backdrop-blur rounded-t-2xl absolute bottom-0 left-0 w-full h-[82vh] p-5 pt-10">
-                            <button onClick={() => { setSelectedBounty(null) }}>x</button>
+                    {selectedBounty ?
+                        <div className="bg-black/70 backdrop-blur rounded-t-2xl absolute bottom-0 left-0 w-full h-[82vh] p-5">
+                            <button className="ml-auto block mb-5" onClick={() => { setSelectedBounty(null) }}><MdClose size={35} /></button>
                             <div className="flex flex-col gap-5">
                                 <div className="text-2xl font-bold">{selectedBounty.title}</div>
                                 <span className="flex justify-between">
@@ -76,9 +75,9 @@ export default function Bounties() {
                                 </span>
                                 <span className="flex gap-2">{selectedBounty.tags.map((tag, index) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</span>
                             </div>
-                        </div>
+                        </div> : null
                     }
-                </>
+                </div>
             }
         </div>
     </Page>

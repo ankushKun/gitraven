@@ -23,7 +23,7 @@ export default function Dashboard() {
     }
 
     return <Page background>
-        <span className="text-4xl mb-5" style={fonts.nabla.style}>Dashboard</span>
+        <div className="text-4xl mb-5" style={fonts.nabla.style}>Dashboard</div>
         <div className="flex flex-col sm:flex-row w-full border-t border-white/30">
             <div className="border-r border-white/30 flex flex-row sm:flex-col gap-5 p-5 overflow-scroll">
                 <TabButton text="Profile" />

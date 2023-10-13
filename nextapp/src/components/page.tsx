@@ -17,11 +17,12 @@ export default function Page({ children, background, noLoading }: any) {
         }
     }, [isConnected, router, noLoading])
 
-    return <main className="min-h-screen sm:px-20 p-5 text-white/90 select-none"
+    return <div className="min-h-screen sm:px-20 p-5 text-white/90 select-none"
         style={{ backgroundImage: "url('/background.jpg')", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center center" }}>
         <Navbar />
-        <main className={`p-5 my-10 mb-0 rounded-2xl flex flex-col items-center ${background ? "bg-black/30 ring-4 ring-white/20" : ""}`}>
-            {isConnected || noLoading ? children : <Loader />}
+        <main className={`p-5 my-10 mb-0 rounded-2xl flex flex-col items-center ${background ? "bg-black/30 ring-4 ring-white/20" : ""}`} suppressHydrationWarning>
+            {(isConnected || noLoading) ? children : <Loader />}
+            {/* {children} */}
         </main>
-    </main>
+    </div>
 }
