@@ -9,11 +9,21 @@ import useScreenSize from "@/hooks/screenSize";
 export default function Bounties() {
     const [bounties, setBounties] = useState<BountyData[]>([])
     const [selectedBounty, setSelectedBounty] = useState<BountyData | null>(null)
+    const [closePopup, setClosePopup] = useState(false)
     const screenSize = useScreenSize()
 
     useEffect(() => {
         fetch("/api/bounties").then(res => res.json()).then(data => setBounties(data.bounties))
     }, [])
+
+    useEffect(() => {
+        if (closePopup) {
+            setTimeout(() => {
+                setSelectedBounty(null)
+                setClosePopup(false)
+            }, 450)
+        }
+    }, [closePopup])
 
     const Item = ({ data }: { data: BountyData }) => {
         function setActive() {
@@ -42,7 +52,7 @@ export default function Bounties() {
             </div>
             {screenSize.width > 640 ?
                 <>
-                    {selectedBounty ?
+                    {selectedBounty &&
                         <div className="w-[75%] flex flex-col gap-5 ml-7 rounded-2xl bg-black/50 p-3 px-4 h-[70vh]" >
                             {/* DESKTOP VIEW */}
                             <div className="flex justify-between">
@@ -56,13 +66,13 @@ export default function Bounties() {
                             <div className="flex gap-2 justify-end">{selectedBounty.tags.map((tag, index) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</div>
                             <div className="text-white/50">{selectedBounty.status}</div>
                         </div>
-                        : null}
+                    }
                 </> :
                 <div >
                     {/* MOBILE VIEW, SLIDES FROM BOTTOM */}
-                    {selectedBounty ?
-                        <div className="bg-black/70 backdrop-blur rounded-t-2xl absolute bottom-0 left-0 w-full h-[82vh] p-5">
-                            <button className="ml-auto block mb-5" onClick={() => { setSelectedBounty(null) }}><MdClose size={35} /></button>
+                    {selectedBounty &&
+                        <div className={`bg-black/70 backdrop-blur rounded-t-2xl absolute bottom-0 left-0 w-full h-[82vh] p-5 ${closePopup ? "slide-out-bottom" : "slide-in-bottom"}`}>
+                            <button className="ml-auto block mb-5" onClick={() => setClosePopup(true)}><MdClose size={35} /></button>
                             <div className="flex flex-col gap-5">
                                 <div className="text-2xl font-bold">{selectedBounty.title}</div>
                                 <span className="flex justify-between">
@@ -75,7 +85,7 @@ export default function Bounties() {
                                 </span>
                                 <span className="flex gap-2">{selectedBounty.tags.map((tag, index) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</span>
                             </div>
-                        </div> : null
+                        </div>
                     }
                 </div>
             }
