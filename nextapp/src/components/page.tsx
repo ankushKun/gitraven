@@ -20,7 +20,7 @@ export default function Page({ children, background, noLoading }: any) {
     return <div className="min-h-screen sm:px-20 p-5 text-white/90 select-none"
         style={{ backgroundImage: "url('/background.jpg')", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center center" }}>
         <Navbar />
-        <main className={`p-5 my-10 mb-0 rounded-2xl flex flex-col items-center ${background ? "bg-black/30 ring-4 ring-white/20" : ""}`} suppressHydrationWarning>
+        <main className={`p-5 my-10 mb-0 pb-0 rounded-2xl flex flex-col items-center ${background ? "bg-black/30 ring-4 ring-white/20" : ""}`} suppressHydrationWarning>
             {(isConnected || noLoading) ? children : <Loader />}
             {/* {children} */}
         </main>

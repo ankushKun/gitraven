@@ -43,7 +43,7 @@ export default function handler(
             },
             {
                 title: "Create a new logo for the website",
-                description: "The current logo is a placeholder, we need a new logo for the website",
+                description: "The current logo is a placeholder, we need a new logo for the website\nThe current logo is a placeholder, we need a new logo for the website\nThe current logo is a placeholder, we need a new logo for the website",
                 image: "",
                 platform: "github",
                 url: "",

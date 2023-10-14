@@ -16,5 +16,9 @@ const config: Config = {
     },
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: true,
+    darkTheme: "cyberpunk"
+  }
 }
 export default config

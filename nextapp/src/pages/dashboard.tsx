@@ -31,7 +31,7 @@ export default function Dashboard() {
                 <TabButton text="Bookmarks" />
                 <TabButton text="Settings" />
             </div>
-            <div className="p-5 overflow-scroll">
+            <div className="p-5 overflow-scroll w-full">
                 {tabName === "Profile" && <Profile />}
                 {tabName === "My Bounties" && <Bounties />}
                 {tabName === "Bookmarks" && <Bookmarks />}
