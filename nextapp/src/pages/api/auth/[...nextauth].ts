@@ -12,7 +12,7 @@ export default NextAuth({
         session: async ({ session, token }: any) => {
             if (session?.user) {
                 const profile = await fetch(`https://api.github.com/user/${token.uid}`).then((res) => res.json());
-                console.log(profile);
+                // console.log(profile);
                 session.user = profile;
             }
             return session;
