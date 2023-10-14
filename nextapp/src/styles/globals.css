@@ -12,6 +12,11 @@
     /* Firefox */
 }
 
+html,
+body {
+    background-color: black !important;
+}
+
 *::-webkit-scrollbar {
     display: none;
     /* Safari and Chrome */

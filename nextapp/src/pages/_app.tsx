@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app'
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 import { WagmiConfig } from 'wagmi'
 import { polygonMumbai } from 'wagmi/chains'
+import { SessionProvider } from "next-auth/react"
+
 
 
 
@@ -24,9 +26,21 @@ createWeb3Modal({
   }
 })
 
+function SafeHydrate({ children }: any) {
+  return (
+    <div suppressHydrationWarning>
+      {typeof window === 'undefined' ? null : children}
+    </div>
+  )
+}
 
-export default function App({ Component, pageProps }: AppProps) {
+
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return <WagmiConfig config={wagmiConfig}>
-    <Component {...pageProps} />
+    <SessionProvider session={session}>
+      <SafeHydrate>
+        <Component {...pageProps} />
+      </SafeHydrate>
+    </SessionProvider>
   </WagmiConfig>
 }

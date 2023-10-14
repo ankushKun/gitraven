@@ -68,7 +68,7 @@ export default function Bounties() {
         </div>
     }
 
-    return <Page background>
+    return <Page background noLoading>
         <div className="w-full flex" >
             <div className={`${screen!.width > 640 ? "w-[25%]" : "w-[100%]"} h-[70vh] overflow-scroll flex flex-col gap-5 items-center p-0.5 px-2`}>
                 {bounties.length} bounties found

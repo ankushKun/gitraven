@@ -15,6 +15,7 @@
     "@web3modal/react": "^2.7.1",
     "@web3modal/wagmi": "^3.1.0",
     "next": "13.5.4",
+    "next-auth": "^4.23.2",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
