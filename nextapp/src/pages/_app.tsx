@@ -6,7 +6,7 @@ import { polygonMumbai } from 'wagmi/chains'
 
 
 
-const projectId = process.env.WC_PROJECT_ID!
+const projectId = "8eb3ea359713a5c3e40567c8f1178ea9"
 
 const metadata = {
   name: 'GitRaven',
