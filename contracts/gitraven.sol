@@ -26,8 +26,8 @@ contract eth is ERC721Holder {
         reg_Id = TablelandDeployments.get().create(
             address(this),
             SQLHelpers.toCreateFromSchema(
-                "Address text primary key,"
-                "Github text unique NOT NULL",
+                "address text primary key,"
+                "github text unique NOT NULL",
                 reg_PREFIX
             )
         );
@@ -35,15 +35,15 @@ contract eth is ERC721Holder {
         bounty_Id = TablelandDeployments.get().create(
             address(this),
             SQLHelpers.toCreateFromSchema(
-                "BID integer primary key,"
-                "Title text,"
-                "Maintainer text unique,"
-                "URL text,"
-                "Description text,"
-                "Reward integer NOT NULL,"
-                "Tags text,"
+                "bid integer primary key,"
+                "title text,"
+                "maintainer text,"
+                "url text,"
+                "description text,"
+                "reward integer,"
+                "tags text,"
                 // "Solver text,"
-                "Solved integer",
+                "solved integer",
                 bounty_PREFIX
             )
         );
@@ -51,9 +51,9 @@ contract eth is ERC721Holder {
         solver_Id=TablelandDeployments.get().create(
             address(this),
             SQLHelpers.toCreateFromSchema(
-                "BID integer primary key,"
-                "Solver text unique,"
-                "URL text,",
+                "bid integer primary key,"
+                "solver text,"
+                "url text,",
                 solver_PREFIX
             )
         );
@@ -66,11 +66,46 @@ contract eth is ERC721Holder {
             SQLHelpers.toInsert(
                 reg_PREFIX,
                 reg_Id,
-                "Address,Github",
+                "address,github",
                 string.concat(
                     SQLHelpers.quote(Strings.toHexString(Address)),
                     ",",
                     SQLHelpers.quote(Github)
+                )
+            )
+        );
+    }
+
+function bountyFree(string[4] memory _textData) public {
+        _BID = _BID + 1;
+
+        record[msg.sender].push(_BID);
+
+        TablelandDeployments.get().mutate(
+            address(this),
+            bounty_Id,
+            SQLHelpers.toInsert(
+                bounty_PREFIX,
+                bounty_Id,
+                "bid,title,maintainer,url,description,reward,tags,solved",
+                string.concat(
+                    Strings.toString(_BID),
+                    ",",
+                    SQLHelpers.quote(_textData[0]), // TITLE
+                    ",", 
+                    SQLHelpers.quote(Strings.toHexString(msg.sender)),
+                    ",",
+                    SQLHelpers.quote(_textData[2]), // URL
+                    ",", 
+                    SQLHelpers.quote(_textData[1]), // DESC
+                    ",",
+                    SQLHelpers.quote(Strings.toHexString(0)),
+                    ",",
+                    SQLHelpers.quote(_textData[3]), // TAGS
+                    // ",", 
+                    // SQLHelpers.quote(""),
+                    ",",
+                    SQLHelpers.quote(Strings.toHexString(0))
                 )
             )
         );
@@ -87,7 +122,7 @@ contract eth is ERC721Holder {
             SQLHelpers.toInsert(
                 bounty_PREFIX,
                 bounty_Id,
-                "BID,Title,Maintainer,URL,Description,Reward,Tags,Solved",
+                "bid,title,maintainer,url,description,reward,tags,solved",
                 string.concat(
                     Strings.toString(_BID),
                     ",",
@@ -118,7 +153,7 @@ TablelandDeployments.get().mutate(
             SQLHelpers.toInsert(
                 solver_PREFIX,
                 solver_Id,
-                "BID,Solver,URL",
+                "bid,solver,url",
                 string.concat(
                     Strings.toString(_Bid),
                     ",",
@@ -133,12 +168,12 @@ TablelandDeployments.get().mutate(
     function solver_update(string memory _URL,uint _Bid) public {
             
         string memory update = string.concat(
-    "URL=",
+    "url=",
     SQLHelpers.quote(_URL) 
   ); 
 
   string memory from = string.concat(
-    "BID=",
+    "bid=",
     Strings.toString(_Bid) 
   ); 
 
@@ -173,8 +208,8 @@ TablelandDeployments.get().mutate(
     SQLHelpers.toUpdate(
       bounty_PREFIX,
       bounty_Id,
-      string.concat("Title=",SQLHelpers.quote(update[0])),
-      string.concat("BID=",Strings.toString(_bid))
+      string.concat("title=",SQLHelpers.quote(update[0])),
+      string.concat("bid=",Strings.toString(_bid))
     ));
 
     TablelandDeployments.get().mutate(
@@ -183,8 +218,8 @@ TablelandDeployments.get().mutate(
     SQLHelpers.toUpdate(
       bounty_PREFIX,
       bounty_Id,
-      string.concat("URL=",SQLHelpers.quote(update[1])),
-      string.concat("BID=",Strings.toString(_bid))
+      string.concat("url=",SQLHelpers.quote(update[1])),
+      string.concat("bid=",Strings.toString(_bid))
     ));
 
     TablelandDeployments.get().mutate(
@@ -193,8 +228,8 @@ TablelandDeployments.get().mutate(
     SQLHelpers.toUpdate(
       bounty_PREFIX,
       bounty_Id,
-      string.concat("Description=",SQLHelpers.quote(update[2])),
-      string.concat("BID=",Strings.toString(_bid))
+      string.concat("description=",SQLHelpers.quote(update[2])),
+      string.concat("bid=",Strings.toString(_bid))
     ));
 
     TablelandDeployments.get().mutate(
@@ -203,8 +238,8 @@ TablelandDeployments.get().mutate(
     SQLHelpers.toUpdate(
       bounty_PREFIX,
       bounty_Id,
-      string.concat("Solved=",SQLHelpers.quote(update[3])),
-      string.concat("BID=",Strings.toString(_bid))
+      string.concat("solved=",SQLHelpers.quote(update[3])),
+      string.concat("bid=",Strings.toString(_bid))
     ));
 
     }
