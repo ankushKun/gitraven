@@ -8,13 +8,13 @@ import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 
 contract eth is ERC721Holder {
     uint256 public reg_Id;
-    string private constant reg_PREFIX = "Registration";
+    string private constant reg_PREFIX = "registration";
 
     uint256 public bounty_Id;
-    string private constant bounty_PREFIX = "Bounties";
+    string private constant bounty_PREFIX = "bounties";
 
     uint256 public solver_Id;
-    string private constant solver_PREFIX = "Solver";
+    string private constant solver_PREFIX = "solver";
 
     uint256 private _BID = 0;
 
