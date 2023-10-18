@@ -12,6 +12,7 @@ const tableName: string = "test_regis_11155111_122"; // Tablelands health check 
 // const db = new Database<HealthBot>();
 const db = new Database();
 
+
 type Response = {
     counter: number,
 }
