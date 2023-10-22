@@ -1,9 +1,9 @@
-export const contractAddress = "0xa8E4F1D6e0Fe6BBE7C223BF61a147EEe6276f7BF";
+export const contractAddress = "0xC8Eba3696a20e5A3E67d20B818DFA2549E3C6ccf";
 export const chainId = "11155111";
 
-export const regTableName = "registrations_11155111_315";
-export const bountyTableName = "bounties_11155111_316";
-export const solTableName = "solves_11155111_317";
+export const regTableName = "registrations_11155111_320";
+export const bountyTableName = "bounties_11155111_321";
+export const solTableName = "solves_11155111_322";
 
 
 export const contractAbi = [
