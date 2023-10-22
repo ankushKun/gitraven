@@ -2,13 +2,14 @@
 import Page from "@/components/page";
 import { useState, useEffect } from "react";
 import { MdClose } from "react-icons/md"
-import { BountyData } from "./api/bounties";
+import { BountyData } from "./api/all-bounties";
 import { dateToRelativeTime } from "@/utils/conversions";
 import { useLocalStorage } from 'usehooks-ts'
 import useScreenSize from "@/hooks/screen";
 import { MdBookmarkAdd, MdBookmarkAdded, } from "react-icons/md"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import Link from "next/link";
+import { ethers } from "ethers"
 
 export default function Bounties() {
     const [bounties, setBounties] = useState<BountyData[]>([])
@@ -20,7 +21,7 @@ export default function Bounties() {
 
 
     useEffect(() => {
-        fetch("/api/bounties").then(res => res.json()).then(data => setBounties(data.bounties))
+        fetch("/api/all-bounties").then(res => res.json()).then(data => setBounties(data.results))
     }, [])
 
     useEffect(() => {
@@ -51,10 +52,10 @@ export default function Bounties() {
                 <div className="">{data.status}</div>
             </span>
             <span className="flex justify-between">
-                <div className="">{data.reward} {data.crypto}</div>
+                <div className="">{data.reward / 1000000000000000000} ETH</div>
                 <div className="">by {data.maintainer.substring(0, 6)}...</div>
             </span>
-            <span className="flex gap-2">{data.tags.map((tag, index) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</span>
+            <span className="flex gap-2">{data.tags.split(",").map((tag: string, index: number) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</span>
             <button className="absolute bottom-2 right-2" onClick={(e) => {
                 e.isPropagationStopped()
                 e.preventDefault()
@@ -84,16 +85,18 @@ export default function Bounties() {
                                 <div className="text-white/50">{dateToRelativeTime(selectedBounty.created)}</div>
                             </div>
                             <div className="flex justify-between">
-                                <div className="">For {selectedBounty.reward} {selectedBounty.crypto}</div>
+                                <div className="">For {(selectedBounty.reward / 1000000000000000000)} ETH</div>
                                 <div className="">by {selectedBounty.maintainer}</div>
                             </div>
                             <div className="flex justify-between">
                                 <div className="text-white/50">{selectedBounty.status}</div>
-                                <div className="flex gap-2 justify-end">{selectedBounty.tags.map((tag, index) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</div>
+                                <div className="flex gap-2 justify-end">{selectedBounty.tags.split(",").map((tag: string, index: number) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</div>
                             </div>
                             <div className="text-white">{selectedBounty.description}</div>
                             <div className="flex w-full justify-evenly">
                                 <Link href={selectedBounty.url} target="_blank" className="btn btn-secondary rounded-lg">Checkout<FaExternalLinkAlt size={15} className="mb-1" /></Link>
+                                <Link href={selectedBounty.url} target="_blank" className="btn btn-secondary rounded-lg">Fork Repo<FaExternalLinkAlt size={15} className="mb-1" /></Link>
+                                <Link href={selectedBounty.url} target="_blank" className="btn btn-secondary rounded-lg">Submit Solution<FaExternalLinkAlt size={15} className="mb-1" /></Link>
 
                                 {/* <button className="btn btn-secondary rounded-lg block"
                                     onClick={() => {
@@ -124,10 +127,12 @@ export default function Bounties() {
                                     <div className="">{selectedBounty.reward} {selectedBounty.crypto}</div>
                                     <div className="">by {selectedBounty.maintainer.substring(0, 6)}...</div>
                                 </span>
-                                <span className="flex gap-2">{selectedBounty.tags.map((tag, index) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</span>
+                                <span className="flex gap-2">{selectedBounty.tags.split(",").map((tag: string, index: number) => <div key={index} className="text-sm bg-red-400 rounded-xl w-fit px-2 ring-2 text-black ring-black">{tag}</div>)}</span>
                                 <div className="text-white">{selectedBounty.description}</div>
                                 <div className="flex w-full justify-evenly">
                                     <Link href={selectedBounty.url} target="_blank" className="btn btn-secondary rounded-lg">Checkout<FaExternalLinkAlt size={15} className="mb-1" /></Link>
+                                    <Link href={"#"} target="_blank" className="btn btn-secondary rounded-lg">Fork<FaExternalLinkAlt size={15} className="mb-1" /></Link>
+                                    <Link href={"#"} target="_blank" className="btn btn-secondary rounded-lg">Submit<FaExternalLinkAlt size={15} className="mb-1" /></Link>
 
                                     <button className=" block absolute top-5 left-5"
                                         onClick={() => {

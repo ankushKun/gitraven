@@ -2,7 +2,7 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 import { WagmiConfig } from 'wagmi'
-import { polygonMumbai } from 'wagmi/chains'
+import { sepolia, polygonMumbai } from 'wagmi/chains'
 import { SessionProvider } from "next-auth/react"
 
 
@@ -16,7 +16,7 @@ const metadata = {
   theme: 'dark'
 }
 
-const chains = [polygonMumbai]
+const chains = [sepolia, polygonMumbai]
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
 
 createWeb3Modal({
